@@ -1,6 +1,20 @@
 import itertools
 import tkinter as tk
 
+#def permute(arr):
+#    if len(arr) == 0:
+#        return []
+#    elif len(arr) == 1:
+#        return [arr]
+#    else:
+#        res = []
+#        for i in range(len(arr)):
+#            elem = arr[i]
+#            rem = arr[:i] + arr[i+1:]
+#            for p in permute(rem):
+#                res.append([elem] + p)
+#        return res
+
 def check_numbers(arr):
     if len(arr) != 12:
         return False
