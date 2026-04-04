@@ -7,23 +7,29 @@ függvény check_numbers: numbers tömb;
    vagy numbers hossza >= 11 és sums[4] = numbers[5] + numbers[6] + numbers[9] + numbers[10]
    vagy numbers hossza == 12 és sums[5] = numbers[6] + numbers[7] + numbers[10] + numbers[11]
   térj vissza nem check_failed értékkel
+függvény vége
 
 eljárás find_solutions: guess tömb, numbers tömb;
   ha a check_numbers(guess) értéke Igaz
+  akkor
+    ha a numbers hossza = 0
     akkor
-      ha a numbers hossza = 0
-        akkor solutions -höz fűzd hozzá a guess -et
+      solutions -höz fűzd hozzá a guess -et
     különben
       ciklus i = 1 -től a numbers hosszáig:
         new_guess := guess + numbers[i]
         new_numbers := numbers[0 indextől i-ig] + numbers[i+1 indextől az utolsóig]
         ha new_guess hossza = user_num1_pos
-          akkor
-            szúrd be user_num1 értékét a new_guess tömb user_num1_pos indexéhez
+        akkor
+          szúrd be user_num1 értékét a new_guess tömb user_num1_pos indexéhez
         különben ha new_guess hossza = user_num2_pos
-          akkor
-            szúrd be user_num2 értékét a new_guess tömb user_num2_pos indexéhez
+          akkor szúrd be user_num2 értékét a new_guess tömb user_num2_pos indexéhez
+        elágazás vége
         hívd meg a find_solutions eljárást new_guess és new_numbers paraméterekkel
+      ciklus vége
+    elágazás vége
+  elágazás vége
+eljárás vége      
 
 user_num1 := 1
 user_num1_pos := 4
@@ -37,3 +43,4 @@ ha megoldások hossza = 0
     írd ki: "Nincs megoldás!"
   különben
     írd ki: megoldások hossza + "megoldást találtam"
+elágazás vége
