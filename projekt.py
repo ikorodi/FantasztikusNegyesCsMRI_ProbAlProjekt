@@ -1,42 +1,37 @@
-import itertools
 import tkinter as tk
 
-#def permute(arr):
-#    if len(arr) == 0:
-#        return []
-#    elif len(arr) == 1:
-#        return [arr]
-#    else:
-#        res = []
-#        for i in range(len(arr)):
-#            elem = arr[i]
-#            rem = arr[:i] + arr[i+1:]
-#            for p in permute(rem):
-#                res.append([elem] + p)
-#        return res
+def check_numbers(numbers):
+    check_failed = len(numbers) > 12\
+     or len(numbers) >= 6 and sums[0] != numbers[0] + numbers[1] + numbers[4] + numbers[5]\
+     or len(numbers) >= 7 and sums[1] != numbers[1] + numbers[2] + numbers[5] + numbers[6]\
+     or len(numbers) >= 8 and sums[2] != numbers[2] + numbers[3] + numbers[6] + numbers[7]\
+     or len(numbers) >= 10 and sums[3] != numbers[4] + numbers[5] + numbers[8] + numbers[9]\
+     or len(numbers) >= 11 and sums[4] != numbers[5] + numbers[6] + numbers[9] + numbers[10]\
+     or len(numbers) == 12 and sums[5] != numbers[6] + numbers[7] + numbers[10] + numbers[11]
+    return not check_failed
 
-def check_numbers(arr):
-    if len(arr) != 12:
-        return False
-    else:
-        return sums[5] == arr[6] + arr[7] + arr[10] + arr[11] and sums[4] == arr[5] + arr[6] + arr[9] + arr[10] and sums[3] == arr[4] + arr[5] + arr[8] + arr[9] and sums[2] == arr[2] + arr[3] + arr[6] + arr[7] and sums[1] == arr[1] + arr[2] + arr[5] + arr[6] and sums[0] == arr[0] + arr[1] + arr[4] + arr[5]
+def find_solutions(guess, numbers):
+    if check_numbers(guess):
+        if len(numbers) == 0:
+            solutions.append(guess)
+        else:
+            for i in range(len(numbers)):
+                new_guess = guess + [numbers[i]]
+                new_numbers = numbers[:i] + numbers[i+1:]
+                if len(new_guess) == user_num1_pos:
+                    new_guess.insert(user_num1_pos, user_num1)
+                elif len(new_guess) == user_num2_pos:
+                    new_guess.insert(user_num2_pos, user_num2)
+                find_solutions(new_guess, new_numbers)
 
 user_num1 = 1
 user_num1_pos = 4
 user_num2 = 5
 user_num2_pos = 7
 sums = [23, 37, 30, 27, 40, 24]
-arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-arr = [elem for elem in arr if elem not in [user_num1, user_num2]]
-
-perm_arr = itertools.permutations(arr)
-
+numbers = [elem for elem in range(1,13) if elem not in [user_num1, user_num2]]
 solutions = []
-for perm in perm_arr:
-    perm = list(perm)
-    perm_to_check = perm[:user_num1_pos] + [user_num1] + perm[user_num1_pos:user_num2_pos-1] + [user_num2] + perm[user_num2_pos-1:]
-    if check_numbers(perm_to_check):
-        solutions.append(perm_to_check)
+find_solutions([], numbers)
 
 if len(solutions) == 0:
     print("Nincs megoldás!")
@@ -125,3 +120,4 @@ else:
     draw_puzzle(canvas, 400, 200, "Lehetséges kitöltés", solved_values)
     
     root.mainloop()
+

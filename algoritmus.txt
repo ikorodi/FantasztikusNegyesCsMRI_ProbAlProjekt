@@ -1,50 +1,36 @@
-függvény Permute: tömb;
-  ha a tömb hossza = 0
+függvény check_numbers: numbers tömb;
+  check_failed := numbers hossza > 12
+   vagy numbers hossza >= 6 és sums[0] = numbers[0] + numbers[1] + numbers[4] + numbers[5]
+   vagy numbers hossza >= 7 és sums[1] = numbers[1] + numbers[2] + numbers[5] + numbers[6]
+   vagy numbers hossza >= 8 és sums[2] = numbers[2] + numbers[3] + numbers[6] + numbers[7]
+   vagy numbers hossza >= 10 és sums[3] = numbers[4] + numbers[5] + numbers[8] + numbers[9]
+   vagy numbers hossza >= 11 és sums[4] = numbers[5] + numbers[6] + numbers[9] + numbers[10]
+   vagy numbers hossza == 12 és sums[5] = numbers[6] + numbers[7] + numbers[10] + numbers[11]
+  térj vissza nem check_failed értékkel
+
+eljárás find_solutions: guess tömb, numbers tömb;
+  ha a check_numbers(guess) értéke Igaz
     akkor
-      térj vissza [] értékkel
-  különben ha a tömb hossza = 1
-    akkor
-      térj vissza tömb értékkel 
-  különben:
-    eredmény := []
-    ciklus i := 1 -től tömb hosszáig
-      elem := tömb[i]
-      maradék := tömb[0-tól i pozícióig] + tömb[i+1 pozíciótól a végéig]
-      ciklus minden egyes p elemre a Permute(maradék) visszatérési értékében
-        eredmény -hez fűzd hozzá: elem + p -t
-      ciklus vége
-    ciklus vége
-függvény vége
+      ha a numbers hossza = 0
+        akkor solutions -höz fűzd hozzá a guess -et
+    különben
+      ciklus i = 1 -től a numbers hosszáig:
+        new_guess := guess + numbers[i]
+        new_numbers := numbers[0 indextől i-ig] + numbers[i+1 indextől az utolsóig]
+        ha new_guess hossza = user_num1_pos
+          akkor
+            szúrd be user_num1 értékét a new_guess tömb user_num1_pos indexéhez
+        különben ha new_guess hossza = user_num2_pos
+          akkor
+            szúrd be user_num2 értékét a new_guess tömb user_num2_pos indexéhez
+        hívd meg a find_solutions eljárást new_guess és new_numbers paraméterekkel
 
-függvény Check_numbers: tömb;
-  ha a tömb hossza <> 12
-    akkor térj vissza Hamis értékkel
-  különben ha összegek[5] = tömb[6] + tömb[7] + tömb[10] + tömb[11]
-   és összegek[4] = tömb[5] + tömb[6] + tömb[9] + tömb[10]
-   és összegek[3] = tömb[4] + tömb[5] + tömb[8] + tömb[9]
-   és összegek[2] = tömb[2] + tömb[3] + tömb[6] + tömb[7]
-   és összegek[1] = tömb[1] + tömb[2] + tömb[5] + tömb[6]
-   és összegek[0] = tömb[0] + tömb[1] + tömb[4] + tömb[5]
-    akkor térj vissza Igaz értékkel
-  különben
-    térj vissza Hamis értékkel
-
-adott_szám1 := 1
-adott_szám1_pozíció := 4
-adott_szám2 := 5
-adott_szám2_pozíció := 7
-összegek := [23, 37, 30, 27, 40, 24]
-tömb := [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-tömb := tömb elemei kivéve [adott_szám1, adott_szám2]
-
-perm_tömb := Permute(tömb)
-
-megoldások := []
-Ciklus minden számsor értékre a perm_tömb-ben
-  teljes_számsor := perm_tömb[0-tól adott_szám1_pozíció-ig] + adott_szám1 + perm_tömb[adott_szám1_pozíció-tól adott_szám2_pozíció-1 -ig] + adott_szám2 + perm_tömb[adott_szám2_pozíció-1 -től a végéig]
-    ha Check_numbers(teljes_számsor) = Igaz
-      akkor
-        megoldások -hoz fűzd hozzá: teljes_számsor -t
+user_num1 := 1
+user_num1_pos := 4
+user_num2 := 5
+user_num2_pos := 7
+sums := [23, 37, 30, 27, 40, 24]
+numbers := egész számok 1 -től 12 -ig kivéve [user_num1, user_num2]
 
 ha megoldások hossza = 0
   akkor
