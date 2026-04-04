@@ -38,7 +38,7 @@ user_num2_pos := 7
 sums := [23, 37, 30, 27, 40, 24]
 numbers := egész számok 1 -től 12 -ig kivéve [user_num1, user_num2]
 solutions = []
-hívd meg a find_solutions eljárást
+hívd meg a find_solutions eljárást üres tömb és numbers paraméterekkel
 
 ha megoldások hossza = 0
   akkor
